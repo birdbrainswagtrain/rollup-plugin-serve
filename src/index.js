@@ -29,9 +29,6 @@ function serve (options = { contentBase: '' }) {
     mime.define(options.mimeTypes, true)
   }
 
-  // Use http or https as needed
-  const http_s = options.https ? https : http
-
   const proxies = Object.keys(options.proxy).map(proxy => ({
     proxy,
     destination: options.proxy[proxy],
@@ -53,10 +50,13 @@ function serve (options = { contentBase: '' }) {
     const proxy = proxies.find(({ test }) => request.url.match(test))
 
     // If a proxy exists, forward the request to the appropriate server
-    if (proxy && proxy.destination) {
+    if (proxy && proxy.destination) {  
       const { destination } = proxy
       const newDestination = `${destination}${request.url}`
       const { headers, method, statusCode } = request
+      
+      // Use http or https as needed
+      const http_s = destination.startsWith("https://") ? https : http;
 
       // Get the request contents
       let body = '';
