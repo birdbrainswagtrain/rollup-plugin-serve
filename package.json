@@ -6,7 +6,7 @@
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
   "scripts": {
-    "build": "rollup -c",
+    "prepare": "rollup -c",
     "dev": "rollup -cw",
     "lint": "standard --fix rollup.config.js src/**",
     "test": "cd test && rollup -cw || cd .."
